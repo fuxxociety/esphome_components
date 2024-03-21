@@ -13,7 +13,7 @@ static const uint16_t SPEED_JUMP = 0b110110000100;
 static const uint16_t SPEED_UP   = 0b110110010000;
 static const uint16_t SPEED_DOWN = 0b110110100000;
 
-static const uint8_t duty_to_speed[13] = {18.4, 25.6, 33.6, 39.6, 47.6, 54.4, 61.6, 68.4, 75.6, 83.6, 90.4, 100};
+static const uint8_t duty_to_speed[13] = {18, 25, 34, 40, 48, 54, 62, 68, 76, 84, 90, 100};
 
 void PedestalFan::setup() {
   this->traits_ = fan::FanTraits(true, true, false, 12);
