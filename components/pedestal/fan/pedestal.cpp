@@ -21,6 +21,9 @@ void PedestalFan::setup() {
     this->update_speed_(state);
   });
   this->osc_pin_->setup();
+
+  // Present speeds 1-12 to HA instead of percentage.
+  this->add_speed_control(fan::FanSpeedControl::create_relative().set_speed_range(1, 12));
 }
 
 void PedestalFan::loop() {
@@ -107,8 +110,7 @@ void PedestalFan::control(const fan::FanCall &call) {
 
 void PedestalFan::update_speed_(float value) {
   value = clamp(value, 0.0f, 100.0f);
-  int speed;
-  for (speed = 0; value > duty_to_speed[speed]; speed++);
+  int speed = static_cast<int>(round(value / 100.0f * 12)); // Map percentage to speed units 1-12
   ESP_LOGD(TAG, "detected speed is %d", speed);
   if (speed != this->measured_speed_) {
     this->measured_speed_ = speed;
